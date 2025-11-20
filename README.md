@@ -82,7 +82,7 @@ Biblioteca completa e moderna para integração com as **APIs de Parceiro do Gup
 ### Via Composer
 
 ```bash
-composer require marcosendler/gupshup-partner-library
+composer require marcosendler/laravel-gupshup-partner
 ```
 
 ### Publicar Configuração

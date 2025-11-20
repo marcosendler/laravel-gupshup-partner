@@ -1,5 +1,5 @@
 {
-    "name": "marcosendler/gupshup-partner",
+    "name": "marcosendler/laravel-gupshup-partner",
     "description": "Biblioteca completa para integração com as APIs de Parceiro do Gupshup para Laravel",
     "keywords": [
         "gupshup",
