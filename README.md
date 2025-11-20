@@ -1,6 +1,6 @@
 # 📱 Gupshup Partner API - Laravel Package
 
-![CI](https://github.com/marcosendler/GupshupPartnerLibrary/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/marcosendler/laravel-gupshup-partner/actions/workflows/ci.yml/badge.svg)
 
 [![Latest Version](https://img.shields.io/github/v/release/marcosendler/laravel-gupshup-partner)](https://github.com/marcosendler/laravel-gupshup-partner/releases)
 [![PHP Version](https://img.shields.io/badge/PHP-8.1%2B-blue)](https://php.net)
