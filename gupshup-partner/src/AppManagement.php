@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\GupshupPartner;
+namespace GupshupPartner;
 
 use Illuminate\Support\Facades\Cache;
 

@@ -1,0 +1,56 @@
+{
+    "name": "marcosendler/gupshup-partner",
+    "description": "Biblioteca completa para integração com as APIs de Parceiro do Gupshup para Laravel",
+    "keywords": [
+        "gupshup",
+        "whatsapp",
+        "whatsapp-business",
+        "laravel",
+        "partner-api",
+        "messaging"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marcos Endler",
+            "email": "marcos@marcosendler.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1|^8.2|^8.3",
+        "illuminate/support": "^10.0|^11.0",
+        "illuminate/http": "^10.0|^11.0",
+        "illuminate/cache": "^10.0|^11.0",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "orchestra/testbench": "^8.0|^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "GupshupPartner\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "GupshupPartner\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "GupshupPartner\\GupshupPartnerServiceProvider"
+            ],
+            "aliases": {
+                "GupshupPartner": "GupshupPartner\\Facades\\GupshupPartner"
+            }
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

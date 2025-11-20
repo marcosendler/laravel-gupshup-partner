@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Providers;
+namespace GupshupPartner;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\GupshupPartner\GupshupPartnerClient;
+use GupshupPartner\GupshupPartnerClient;
 
 class GupshupPartnerServiceProvider extends ServiceProvider
 {

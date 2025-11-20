@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\GupshupPartner;
+namespace GupshupPartner;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
-use App\Services\GupshupPartner\Exceptions\GupshupPartnerException;
+use GupshupPartner\Exceptions\GupshupPartnerException;
 
 class GupshupPartnerClient
 {
