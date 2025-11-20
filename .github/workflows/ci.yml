@@ -15,7 +15,7 @@ jobs:
         php: [8.1, 8.2, 8.3]
     steps:
       - uses: actions/checkout@v4
-      - uses: shivammathur/setup-php@v3
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           tools: composer:v2
@@ -23,12 +23,12 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ runner.os == 'Windows' && 'C:/Users/runneradmin/AppData/Local/Composer' || '~/.cache/composer' }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
       - name: composer validate
         run: composer validate --strict
       - name: Install
         run: composer install --prefer-dist --no-progress --no-interaction
       - name: Lint
-        run: find . -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l || true
+        run: find . -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l
       - name: PHPUnit
         run: vendor/bin/phpunit
