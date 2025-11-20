@@ -1,5 +1,6 @@
-# 📱 Gupshup Partner API - Laravel Library
+# 📱 Gupshup Partner API - Laravel Package
 
+[![Latest Version](https://img.shields.io/github/v/release/marcosendler/GupshupPartnerLibrary)](https://github.com/marcosendler/GupshupPartnerLibrary/releases)
 [![PHP Version](https://img.shields.io/badge/PHP-8.1%2B-blue)](https://php.net)
 [![Laravel Version](https://img.shields.io/badge/Laravel-10.x%7C11.x-red)](https://laravel.com)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
@@ -65,6 +66,8 @@ Biblioteca completa e moderna para integração com as **APIs de Parceiro do Gup
 - Publicação e depreciação
 - Gerenciamento de subscrições
 
+---
+
 ## 📋 Requisitos
 
 - PHP 8.1 ou superior
@@ -72,80 +75,43 @@ Biblioteca completa e moderna para integração com as **APIs de Parceiro do Gup
 - Extensão cURL habilitada
 - Conta de Parceiro Gupshup ativa
 
-## 🔨 Instalação
+---
 
-### Instalação via Composer (recomendado)
+## 📦 Instalação
 
-```bash
-composer require marcosendler/gupshup-partner
-```
-
-A partir do Laravel 5.5, a maioria dos pacotes são carregados automaticamente via Package Discovery. Se você preferir registrar manualmente, veja abaixo.
-
-### 1. Copie os arquivos para seu projeto Laravel (alternativa manual / estrutura antiga)
+### Via Composer
 
 ```bash
-# Estrutura de diretórios
-app/
-├── Services/
-│   └── GupshupPartner/
-│       ├── GupshupPartnerClient.php
-│       ├── AppManagement.php
-│       ├── TemplateManagement.php
-│       ├── MessageManagement.php
-│       ├── AnalyticsManagement.php
-│       ├── WalletManagement.php
-│       ├── FlowManagement.php
-│       └── Exceptions/
-│           └── GupshupPartnerException.php
-├── Providers/
-│   └── GupshupPartnerServiceProvider.php
-└── Facades/
-    └── GupshupPartner.php
-config/
-└── gupshup.php
+composer require marcosendler/gupshup-partner-library
 ```
 
-### 2. Registre o Service Provider
+### Publicar Configuração
 
-Em `config/app.php`:
-
-```php
-'providers' => [
-    // ...
-    // Para instalação via composer
-    GupshupPartner\GupshupPartnerServiceProvider::class,
-    // Para instalação manual (copiando arquivos para `app/Providers`):
-    // App\Providers\GupshupPartnerServiceProvider::class,
-],
-
-'aliases' => [
-    // ...
-    'GupshupPartner' => GupshupPartner\Facades\GupshupPartner::class,
-    // 'GupshupPartner' => App\Facades\GupshupPartner::class, // manual install
-],
+```bash
+php artisan vendor:publish --provider="GupshupPartner\GupshupPartnerServiceProvider" --tag="gupshup-config"
 ```
 
-### 3. Configure as variáveis de ambiente
+### Configurar Credenciais
 
-No arquivo `.env`:
+Adicione no arquivo `.env`:
 
 ```env
-GUPSHUP_PARTNER_EMAIL=seu-email@exemplo.com
-GUPSHUP_PARTNER_PASSWORD=sua-senha-segura
+GUPSHUP_PARTNER_EMAIL=seu-email@gupshup.com
+GUPSHUP_PARTNER_PASSWORD=sua-senha
 GUPSHUP_DEFAULT_APP_ID=seu-app-id-padrao
 GUPSHUP_CACHE_ENABLED=true
 ```
 
-### 4. Publique a configuração (opcional)
+### Limpar Cache
 
 ```bash
-php artisan vendor:publish --tag=gupshup-config
+php artisan config:clear
+php artisan cache:clear
 ```
 
-## 🎯 Uso Rápido
+---
 
-### Exemplo Básico
+## 🎯 Uso Rápido
 
 ```php
 use GupshupPartner\Facades\GupshupPartner;
@@ -167,6 +133,10 @@ GupshupPartner::messages()->sendTextTemplate(
 // Obter analytics de hoje
 $analytics = GupshupPartner::analytics()->getTodayAnalytics('app-id');
 ```
+
+---
+
+## 💡 Exemplos de Uso
 
 ### Exemplo em Controller
 
@@ -204,9 +174,78 @@ class WhatsAppController extends Controller
 }
 ```
 
-## 📚 Documentação Completa
+### Gerenciamento de Apps
 
-Para exemplos detalhados de cada funcionalidade, consulte o arquivo [EXEMPLOS_DE_USO.md](EXEMPLOS_DE_USO.md).
+```php
+use GupshupPartner\Facades\GupshupPartner;
+
+// Listar todos os apps
+$apps = GupshupPartner::apps()->list();
+
+// Vincular um app
+$linkedApp = GupshupPartner::apps()->link('API_KEY', 'Nome do App');
+
+// Obter token de acesso
+$token = GupshupPartner::apps()->getToken('app-id');
+
+// Configurar ice breakers
+GupshupPartner::apps()->setIceBreakers('app-id', [
+    'Olá! Como posso ajudar?',
+    'Ver catálogo',
+    'Falar com atendente'
+]);
+```
+
+### Gerenciamento de Templates
+
+```php
+// Listar templates
+$templates = GupshupPartner::templates()->list($appId);
+
+// Criar template de texto
+$template = GupshupPartner::templates()->createText($appId, [
+    'elementName' => 'boas_vindas',
+    'category' => 'UTILITY',
+    'languageCode' => 'pt_BR',
+    'data' => 'Olá {{1}}, bem-vindo à {{2}}!'
+]);
+
+// Obter templates aprovados
+$approved = GupshupPartner::templates()->getApproved($appId);
+```
+
+### Analytics
+
+```php
+use Carbon\Carbon;
+
+$appId = 'seu-app-id';
+$hoje = Carbon::now()->format('Y-m-d');
+$semanaAtras = Carbon::now()->subWeek()->format('Y-m-d');
+
+// Analytics de hoje
+$today = GupshupPartner::analytics()->getTodayAnalytics($appId);
+
+// Métricas resumidas
+$metrics = GupshupPartner::analytics()->getSummaryMetrics(
+    $appId,
+    $semanaAtras,
+    $hoje
+);
+
+// Resultado:
+// [
+//     'total_sent' => 1000,
+//     'total_delivered' => 980,
+//     'delivery_rate' => 98.0,
+//     'read_rate' => 86.7,
+//     'failure_rate' => 2.0
+// ]
+```
+
+Para exemplos detalhados, consulte [EXEMPLOS_DE_USO.md](EXEMPLOS_DE_USO.md).
+
+---
 
 ## 🏗️ Arquitetura
 
@@ -224,6 +263,8 @@ GupshupPartnerClient (Cliente Principal)
 
 Cada módulo é independente e pode ser usado separadamente ou através da Facade principal.
 
+---
+
 ## 🔐 Autenticação e Cache
 
 A biblioteca gerencia automaticamente:
@@ -232,9 +273,12 @@ A biblioteca gerencia automaticamente:
 - **App Tokens**: Obtidos por app, cached por 23 horas
 - **Refresh Automático**: Tokens são renovados automaticamente quando expiram
 
+---
+
 ## 🛡️ Tratamento de Erros
 
 ```php
+use GupshupPartner\Facades\GupshupPartner;
 use GupshupPartner\Exceptions\GupshupPartnerException;
 
 try {
@@ -249,13 +293,15 @@ try {
 }
 ```
 
+---
+
 ## 🧪 Testes
 
 ```php
 // Teste de exemplo
 public function test_pode_listar_apps()
 {
-    $client = new GupshupPartnerClient(
+    $client = new GupshupPartner\GupshupPartnerClient(
         'test@example.com',
         'password'
     );
@@ -267,6 +313,21 @@ public function test_pode_listar_apps()
 }
 ```
 
+Para rodar os testes localmente:
+
+```bash
+composer install
+composer test
+```
+
+Ou:
+
+```bash
+vendor/bin/phpunit
+```
+
+---
+
 ## 🤝 Contribuindo
 
 Contribuições são bem-vindas! Por favor:
@@ -277,6 +338,8 @@ Contribuições são bem-vindas! Por favor:
 4. Push para a branch (`git push origin feature/MinhaFeature`)
 5. Abra um Pull Request
 
+---
+
 ## 📝 Changelog
 
 ### v1.0.0 (2024)
@@ -286,15 +349,21 @@ Contribuições são bem-vindas! Por favor:
 - ✅ Integração nativa com Laravel
 - ✅ Documentação completa
 
+---
+
 ## 📄 Licença
 
 Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
 
+---
+
 ## 🆘 Suporte
 
-- 📧 Email: [seu-email@exemplo.com](mailto:seu-email@exemplo.com)
-- 🐛 Issues: [GitHub Issues](https://github.com/seu-usuario/gupshup-partner-laravel/issues)
-- 📖 Documentação Gupshup: [https://partner-docs.gupshup.io/](https://partner-docs.gupshup.io/)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/marcosendler/GupshupPartnerLibrary/issues)
+- 📖 **Documentação Gupshup**: [https://partner-docs.gupshup.io/](https://partner-docs.gupshup.io/)
+- 💬 **Discussões**: [GitHub Discussions](https://github.com/marcosendler/GupshupPartnerLibrary/discussions)
+
+---
 
 ## 🙏 Agradecimentos
 
@@ -304,6 +373,6 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 
 ---
 
-Desenvolvido com ❤️ para a comunidade Laravel
+**Desenvolvido com ❤️ para a comunidade Laravel**
 
 **Nota**: Esta é uma biblioteca não-oficial. Para suporte oficial, consulte a [documentação do Gupshup](https://partner-docs.gupshup.io/).

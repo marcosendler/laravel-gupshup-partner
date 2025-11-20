@@ -25,7 +25,7 @@ class GupshupPartnerServiceProvider extends ServiceProvider
 
         // Merge configuration
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/gupshup.php',
+            __DIR__ . '/../config/gupshup.php',
             'gupshup'
         );
     }
@@ -38,7 +38,7 @@ class GupshupPartnerServiceProvider extends ServiceProvider
         // Publica o arquivo de configuração
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../../config/gupshup.php' => config_path('gupshup.php'),
+                __DIR__ . '/../config/gupshup.php' => config_path('gupshup.php'),
             ], 'gupshup-config');
         }
     }
