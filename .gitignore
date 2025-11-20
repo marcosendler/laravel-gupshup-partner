@@ -1,3 +1,88 @@
+# Composer
+/vendor/
+composer.phar
+composer.lock
+
+# Demo and local test project
+/demo/
+
+# PHPUnit
+.phpunit.result.cache
+.phpunit.cache
+phpunit.xml.bak
+build/
+junit.xml
+
+# IDEs and editors
+/.idea/
+.vscode/
+.phpstorm.meta.php
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment / secrets
+.env
+.env.*.local
+.env.local
+.env.testing
+.env.backup
+
+# Node
+/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+pnpm-lock.yaml
+
+# Logs
+*.log
+/storage/logs/
+
+# Laravel & PHP runtime cache
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
+/bootstrap/cache/*
+
+# Generated files and caches
+/.php-cs-fixer.cache
+/.php_cs.cache
+/.phpunit.cache
+/.phpunit.result.cache
+/.coverage
+coverage.xml
+/.cache/
+
+# Editor backup files
+*~
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+desktop.ini
+
+# Composer vendor at demo
+demo/vendor/
+
+# Ignore lock files for NPM (if used)
+package-lock.json
+pnpm-lock.yaml
+
+# Misc
+/.idea/
+/.vscode/
+.history/
+__pycache__/
+env/
+venv/
+/.venv/
+/.env.local.php
 /vendor
 /demo
 composer.lock

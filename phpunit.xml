@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php" colors="true" verbose="true">
-    <testsuites>
-        <testsuite name="GupshupPartner Test Suite">
-            <directory>./tests</directory>
-        </testsuite>
-    </testsuites>
-
-    <php>
-        <env name="APP_ENV" value="testing" />
-        <env name="CACHE_DRIVER" value="array" />
-    </php>
-
-    <logging>
-        <log type="testdox-html" target="build/test-report.html"/>
-    </logging>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="vendor/autoload.php" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" cacheDirectory=".phpunit.cache">
+  <testsuites>
+    <testsuite name="GupshupPartner Test Suite">
+      <directory>./tests</directory>
+    </testsuite>
+  </testsuites>
+  <php>
+    <env name="APP_ENV" value="testing"/>
+    <env name="CACHE_DRIVER" value="array"/>
+  </php>
+  <logging>
+    <testdoxHtml outputFile="build/test-report.html"/>
+  </logging>
+  <source/>
 </phpunit>
